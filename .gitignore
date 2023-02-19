@@ -105,3 +105,6 @@ dist
 
 # IntelliJ IDE
 .idea/
+
+# VS Code
+.vscode/
