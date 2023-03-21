@@ -114,3 +114,6 @@ app/build/
 
 # Scratch folder
 .scratch/
+
+# Ignore Secret
+app/secret/
