@@ -117,3 +117,4 @@ app/build/
 
 # Ignore Secret
 app/secret/
+app/src/secret/
