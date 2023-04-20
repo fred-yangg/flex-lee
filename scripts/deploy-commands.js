@@ -1,16 +1,19 @@
+process.chdir('../app/build')
+
 const { REST, Routes } = require('discord.js');
-const { clientId, API_TOKEN } = require('./src/secret/secret.json');
 const fs = require('node:fs');
 const path = require('node:path');
+const { clientId, API_TOKEN } = require(path.join(process.cwd(), '/secret/secret.json'));
 
 const commands = [];
+
 // Grab all the command files from the commands directory you created earlier
-const commandsPath = path.join(__dirname, '/build/commands');
+const commandsPath = path.join(process.cwd(), '/commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
-	const command = require(`./build/commands/${file}`);
+	const command = require(path.join(process.cwd(), `/commands/${file}`));
 	commands.push(command.data.toJSON());
 }
 
