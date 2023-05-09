@@ -1,4 +1,4 @@
-cd /c/Dev/flex-lee
+cd "${0%/*}/.." || exit
 
 rm -rf ./app/build
 
