@@ -1,4 +1,4 @@
-cd "${0%/*}/.." || exit
+cd "$(dirname "$0")/.." || exit
 
 rm -rf ./app/build
 
