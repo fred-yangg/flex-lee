@@ -1,8 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import {Client, Collection, Events, GatewayIntentBits} from 'discord.js'
-import * as secret from './secret/secret.json'
-import Command from "./interfaces/Command";
+import Command from "interfaces/Command"
 
 // init Client
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
@@ -60,4 +59,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 })
 
-client.login(secret.API_TOKEN)
+// @ts-ignore
+import * as discordConfig from '../config/discord.json'
+
+client.login(discordConfig.api_key)

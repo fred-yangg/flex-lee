@@ -115,6 +115,5 @@ app/build/
 # Scratch folder
 .scratch/
 
-# Ignore Secret
-app/secret/
-app/src/secret/
+# Ignore Config
+app/config/*.json

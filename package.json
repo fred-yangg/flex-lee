@@ -1,8 +1,8 @@
 {
   "dependencies": {
+    "@types/pg": "^8.6.6",
     "discord.js": "^14.7.1",
     "pg": "^8.10.0",
-    "typescript": "^4.9.5",
-    "yaml": "^2.2.2"
+    "typescript": "^4.9.5"
   }
 }

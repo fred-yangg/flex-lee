@@ -1,0 +1,11 @@
+{
+  "user":
+  "database":
+  "port":
+  "host":
+  "keepAlive":
+  "connectionTimeoutMillis":
+  "query_timeout":
+  "statement_timeout":
+  "password":
+}
