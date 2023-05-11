@@ -59,7 +59,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 })
 
-// @ts-ignore
-import * as discordConfig from '../config/discord.json'
+import * as discordConfig from './config/discord.json'
 
 client.login(discordConfig.api_key)
+

@@ -3,7 +3,7 @@ process.chdir('./app/build')
 const { REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-const { client_id, api_key } = require('../app/config/discord.json')
+const { client_id, api_key } = require('../app/src/config/discord.json')
 
 const commands = [];
 

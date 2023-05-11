@@ -116,4 +116,4 @@ app/build/
 .scratch/
 
 # Ignore Config
-app/config/*.json
+app/src/config/*.json
