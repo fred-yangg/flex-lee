@@ -12,7 +12,7 @@ export default async function loadCommands() {
 
         for (const file of commandFiles) {
             const filePath = path.join(commandsPath, file)
-            const command = await import(filePath)
+            const command: Command = await import(filePath)
 
             // Set a new item in the Collection with the key as the command name and the value as the exported module
             if ('data' in command && 'execute' in command) {

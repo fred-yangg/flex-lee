@@ -22,9 +22,10 @@ async function execute(interaction: Interaction<CacheType>) {
 
     try {
         await command.execute(interaction)
+        console.log(`Successfully executed command "${command.data.name}"`)
     }
     catch (error) {
-        console.error(error)
+        console.error(`Error while executing command "${command.data.name}:"`, error)
         if (interaction.replied || interaction.deferred) {
             await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true })
         } else {
