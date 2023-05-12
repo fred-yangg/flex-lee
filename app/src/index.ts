@@ -1,6 +1,6 @@
 import {Client, GatewayIntentBits, Partials} from 'discord.js'
 import discordConfig from "./config/discord.json"
-import handleEvents from "./utils/handleEvents";
+import handleEvents from "./core/handleEvents";
 
 async function main() {
 	// init Client

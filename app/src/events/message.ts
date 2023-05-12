@@ -1,6 +1,6 @@
 import {Client, Events, Message} from 'discord.js'
 import admin from '../config/admin.json'
-import {scratch} from "../utils/admin";
+import scratch from '../utils/admin/scratch'
 
 const name = Events.MessageCreate
 

@@ -1,5 +1,5 @@
 import {CacheType, Events, Interaction} from 'discord.js'
-import loadCommands from "../utils/loadCommands";
+import loadCommands from "../core/loadCommands";
 
 const name = Events.InteractionCreate
 
