@@ -1,8 +1,18 @@
 import {Client, GatewayIntentBits, Partials} from 'discord.js'
 import discordConfig from "./config/discord.json"
 import handleEvents from "./core/handleEvents";
+import fs from "fs";
+import * as process from "process";
+import path from "path";
 
 async function main() {
+
+	// init temp directory
+	const tempDir = path.join(process.cwd(), '/temp')
+	if (!fs.existsSync(tempDir)){
+		fs.mkdirSync(tempDir);
+	}
+
 	// init Client
 	const client = new Client({
 		intents: [

@@ -9,5 +9,6 @@ export default async function query(text: string, values?: any[]) {
         const end = Date.now()
         const duration = end - start
         console.log('executed query', { text, duration, rows: result.rowCount })
+        return result
     })
 }
