@@ -4,6 +4,7 @@ import handleEvents from "./core/handleEvents";
 import fs from "fs";
 import * as process from "process";
 import path from "path";
+import {exec} from "child_process"
 
 async function main() {
 

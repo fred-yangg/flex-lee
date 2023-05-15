@@ -8,4 +8,9 @@
   "query_timeout":
   "statement_timeout":
   "password":
+  "use_ssh_tunnel":
+  "tunnel_host":
+  "tunnel_port":
+  "ssh_host":
+  "ssh_user":
 }
