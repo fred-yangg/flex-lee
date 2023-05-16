@@ -7,11 +7,11 @@ import adminConfig from '../config/admin.json'
 
 let data = new SlashCommandBuilder()
     .setName('bind')
-    .setDescription('Binds any image attachments in the last received DM to a specific command')
+    .setDescription('Binds an image attachment to a command')
     .addStringOption(option =>
         option
             .setName('command')
-            .setDescription('Command to bind ')
+            .setDescription('Command to bind')
             .setRequired(true))
     .addAttachmentOption(option =>
         option
