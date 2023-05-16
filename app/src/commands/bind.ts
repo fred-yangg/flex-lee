@@ -38,13 +38,14 @@ async function checkChecksum(command: string, userId: string, image: Attachment)
 
     // check which commands are already bound to this image
     const filename = checksumResponse.rows.at(0).filename
-    const commandBindingsResponse = await query("SELECT DISTINCT command FROM core_commands WHERE filename=$1 AND (user_id='global' OR user_id=$2)", [
-        filename,
-        userId
+    const commandBindingsResponse = await query("SELECT DISTINCT command FROM core_commands WHERE command=$1 AND (user_id='global' OR user_id=$2) AND filename=$3", [
+        command,
+        userId,
+        filename
     ])
 
     // if the specified command already has this image bound, error out
-    if (commandBindingsResponse.rows.map(row => row.command).includes(command)) {
+    if (commandBindingsResponse.rowCount > 0) {
         return {
             error: true,
             response: `\`Bind Canceled: The image you uploaded was already bound to the command "${command}".\``
