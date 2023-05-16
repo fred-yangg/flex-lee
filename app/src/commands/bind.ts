@@ -48,7 +48,7 @@ async function checkChecksum(command: string, userId: string, image: Attachment)
     if (commandBindingsResponse.rowCount > 0) {
         return {
             error: true,
-            response: `\`Bind Canceled: The image you uploaded was already bound to the command "${command}".\``
+            response: `\n\`Bind Canceled: The image you uploaded was already bound to the command "${command}".\``
         }
     }
     // otherwise, provide the filename for the image
@@ -65,6 +65,8 @@ async function checkChecksum(command: string, userId: string, image: Attachment)
 async function execute(interaction: ChatInputCommandInteraction) {
     const image = interaction.options.getAttachment('image')
     const command = interaction.options.getString('command')
+
+    // get userId
     let userId: string
     if (interaction.user.id === adminConfig.admin_id && !interaction.inGuild()) {
         userId = 'global'
@@ -79,7 +81,20 @@ async function execute(interaction: ChatInputCommandInteraction) {
         return
     }
 
-    await interaction.reply(`\`Attempting Bind: "${image.name}" => "${command}".\``)
+    let reply = `\`Attempting Bind: "${image.name}" => "${command}"\``
+    await interaction.reply(reply)
+
+    // check if attachment size is under the limit
+    if (image.size >= 2000000) {
+        await interaction.editReply(reply + `\n\`Bind Failed: "${image.name}" is larger than the 20 MB size limit\``)
+        return
+    }
+
+    // check if attachment is of the right type
+    if (!['image/jpeg', 'image/png', 'image/gif'].includes(image.contentType ?? 'null')) {
+        await interaction.editReply(reply + `\n\`Bind Failed: "${image.name}" is not in one of the following formats: "jpeg", "png", "gif"\``)
+        return
+    }
 
     // check if command binding is global
     if (userId !== 'global') {
@@ -87,7 +102,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
             command
         ])
         if (checkGlobalResult.rowCount > 0) {
-            await interaction.followUp(`\`Bind Failed: "${command}" is a reserved global command.\``)
+            await interaction.editReply(reply + `\n\`Bind Failed: "${command}" is a reserved global command\``)
             return
         }
     }
@@ -95,7 +110,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
     // check the checksum of the attached image
     const checksumResult = await checkChecksum(command, userId, image)
     if (checksumResult.error) {
-        await interaction.followUp(checksumResult.response)
+        await interaction.editReply(reply + checksumResult.response)
         return
     }
 
@@ -127,7 +142,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
     ])
 
     // send confirmation message
-    await interaction.followUp(`\`Bind Successful: "${image.name}" => "${command}".\``)
+    await interaction.editReply(reply + `\n\`Bind Successful: "${image.name}" => "${command}"\``)
 }
 
 export { data, execute }
