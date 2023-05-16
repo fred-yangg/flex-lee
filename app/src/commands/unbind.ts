@@ -52,7 +52,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
 
     if (deleted > 0) {
         // send confirmation message
-        await interaction.editReply(reply + `\n\`Unbind Successful: ${deleted} images unbound from "${command}"\``)
+        await interaction.editReply(reply + `\n\`Unbind Successful: ${deleted} ${deleted === 1 ? 'image' : 'images'} unbound from "${command}"\``)
     }
     else {
         await interaction.editReply(reply + `\n\`Unbind Failed: No images are bound to "${command}"\``)
