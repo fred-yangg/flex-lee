@@ -3,6 +3,7 @@ import getReadableStreamHash from "../utils/stream/getReadableStreamHash";
 import query from "../db";
 import vgyUpload from "../vgy/vgyUpload";
 import getAttachmentReadableStream from "../utils/stream/getAttachmentReadableStream";
+import adminConfig from '../config/admin.json'
 
 let data = new SlashCommandBuilder()
     .setName('bind')
@@ -46,7 +47,7 @@ async function checkChecksum(command: string, userId: string, image: Attachment)
     if (commandBindingsResponse.rows.map(row => row.command).includes(command)) {
         return {
             error: true,
-            response: `Binding Canceled: The image you uploaded was already bound to the command "${command}".`
+            response: `\`Bind Canceled: The image you uploaded was already bound to the command "${command}".\``
         }
     }
     // otherwise, provide the filename for the image
@@ -63,7 +64,13 @@ async function checkChecksum(command: string, userId: string, image: Attachment)
 async function execute(interaction: ChatInputCommandInteraction) {
     const image = interaction.options.getAttachment('image')
     const command = interaction.options.getString('command')
-    const userId = interaction.user.id
+    let userId: string
+    if (interaction.user.id === adminConfig.admin_id && !interaction.inGuild()) {
+        userId = 'global'
+    }
+    else {
+        userId = interaction.user.id
+    }
 
     // invalid preconditions
     if (image === null || command === null) {
@@ -71,7 +78,18 @@ async function execute(interaction: ChatInputCommandInteraction) {
         return
     }
 
-    await interaction.reply(`Attempting Bind: "${image.name}" => "${command}"...`)
+    await interaction.reply(`\`Attempting Bind: "${image.name}" => "${command}".\``)
+
+    // check if command binding is global
+    if (userId !== 'global') {
+        const checkGlobalResult = await query("SELECT command FROM core_commands WHERE user_id='global' AND command=$1", [
+            command
+        ])
+        if (checkGlobalResult.rowCount > 0) {
+            await interaction.followUp(`\`Bind Failed: "${command}" is a reserved global command.\``)
+            return
+        }
+    }
 
     // check the checksum of the attached image
     const checksumResult = await checkChecksum(command, userId, image)
@@ -108,7 +126,7 @@ async function execute(interaction: ChatInputCommandInteraction) {
     ])
 
     // send confirmation message
-    await interaction.followUp(`Bind Successful: "${image.name}" => "${command}".`)
+    await interaction.followUp(`\`Bind Successful: "${image.name}" => "${command}".\``)
 }
 
 export { data, execute }
