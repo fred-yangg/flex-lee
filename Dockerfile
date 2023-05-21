@@ -10,4 +10,4 @@ COPY . .
 
 RUN ./scripts/build.sh
 
-CMD ["node", "./app/build/index.js"]
+ENTRYPOINT ["node", "./app/build/index.js"]
